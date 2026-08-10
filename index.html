@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACHADINHOS — vitrine de produtos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14121B;
+    --ink-2:#1E1B27;
+    --ink-3:#2A2536;
+    --cream:#F6F1E9;
+    --coral:#FF3B5C;
+    --coral-dim:#D92F4C;
+    --lime:#D6FF3F;
+    --muted:#9A93A8;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  .display{font-family:'Archivo Black',sans-serif;}
+  .mono{font-family:'Space Mono',monospace;}
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible, input:focus-visible{
+    outline:3px solid var(--lime);
+    outline-offset:2px;
+  }
+
+  /* ---------- header ---------- */
+  .site-header{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 20px;
+    background:rgba(20,18,27,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .logo{
+    font-family:'Archivo Black',sans-serif;
+    font-size:1.1rem;
+    letter-spacing:0.02em;
+  }
+  .logo span{color:var(--coral);}
+  .tiktok-pill{
+    display:flex;align-items:center;gap:8px;
+    background:var(--ink-3);
+    border:1px solid rgba(255,255,255,0.1);
+    padding:8px 14px;border-radius:999px;
+    font-size:0.85rem;font-weight:600;
+    transition:background .2s ease, transform .2s ease;
+  }
+  .tiktok-pill:hover{background:var(--coral);transform:translateY(-1px);}
+  .tiktok-pill svg{width:16px;height:16px;flex-shrink:0;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:64px 20px 40px;
+    text-align:center;
+    position:relative;
+  }
+  .hero .eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:0.75rem;
+    letter-spacing:0.15em;
+    color:var(--lime);
+    text-transform:uppercase;
+    margin-bottom:14px;
+    display:inline-block;
+  }
+  .hero h1{
+    font-size:clamp(2.1rem, 8vw, 4.2rem);
+    line-height:1.02;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 .accent{color:var(--coral);}
+  .hero p{
+    max-width:520px;
+    margin:18px auto 0;
+    color:var(--muted);
+    font-size:1rem;
+    line-height:1.5;
+  }
+
+  /* ---------- marquee ---------- */
+  .marquee-wrap{
+    border-top:1px solid rgba(255,255,255,0.08);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    overflow:hidden;
+    background:var(--ink-2);
+    padding:12px 0;
+  }
+  .marquee{
+    display:flex;
+    width:max-content;
+    animation:scroll 22s linear infinite;
+  }
+  .marquee span{
+    font-family:'Space Mono',monospace;
+    font-size:0.8rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    padding:0 24px;
+    white-space:nowrap;
+  }
+  .marquee span:nth-child(odd){color:var(--cream);}
+  @keyframes scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee{animation:none;}
+  }
+
+  /* ---------- filters ---------- */
+  .filters-wrap{
+    position:sticky;top:66px;z-index:40;
+    background:var(--ink);
+    padding:18px 20px 12px;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .search-input{
+    width:100%;
+    background:var(--ink-2);
+    border:1px solid rgba(255,255,255,0.1);
+    color:var(--cream);
+    padding:12px 16px;
+    border-radius:12px;
+    font-family:'Inter',sans-serif;
+    font-size:0.95rem;
+    margin-bottom:14px;
+  }
+  .search-input::placeholder{color:var(--muted);}
+  .chips{
+    display:flex;gap:8px;overflow-x:auto;
+    padding-bottom:4px;
+    scrollbar-width:none;
+  }
+  .chips::-webkit-scrollbar{display:none;}
+  .chip{
+    flex-shrink:0;
+    font-family:'Space Mono',monospace;
+    font-size:0.8rem;
+    padding:8px 16px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.14);
+    color:var(--muted);
+    background:transparent;
+    cursor:pointer;
+    transition:all .2s ease;
+  }
+  .chip:hover{border-color:var(--coral);color:var(--cream);}
+  .chip.active{
+    background:var(--coral);
+    border-color:var(--coral);
+    color:var(--cream);
+    font-weight:700;
+  }
+
+  /* ---------- grid ---------- */
+  main{padding:28px 20px 10px;}
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+    max-width:1200px;
+    margin:0 auto;
+  }
+  @media (min-width:640px){ .grid{grid-template-columns:repeat(3,1fr);} }
+  @media (min-width:960px){ .grid{grid-template-columns:repeat(4,1fr);gap:20px;} }
+
+  .card{
+    background:var(--cream);
+    color:var(--ink);
+    border-radius:var(--radius);
+    overflow:hidden;
+    display:flex;flex-direction:column;
+    border:2px solid transparent;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .card:hover{border-color:var(--coral);transform:translateY(-3px);}
+
+  .card-media{
+    position:relative;
+    aspect-ratio:9/13;
+    background:var(--ink-3);
+    overflow:hidden;
+  }
+  .card-media img{
+    width:100%;height:100%;object-fit:cover;display:block;
+  }
+  .badge-discount{
+    position:absolute;top:10px;left:10px;
+    background:var(--lime);
+    color:var(--ink);
+    font-family:'Space Mono',monospace;
+    font-weight:700;
+    font-size:0.72rem;
+    padding:4px 8px;
+    border-radius:6px;
+  }
+  .play-dot{
+    position:absolute;bottom:10px;right:10px;
+    width:26px;height:26px;
+    border-radius:50%;
+    background:rgba(20,18,27,0.75);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .play-dot svg{width:10px;height:10px;fill:var(--cream);}
+
+  .card-body{
+    padding:14px;
+    display:flex;flex-direction:column;
+    gap:8px;
+    flex:1;
+  }
+  .card-cat{
+    font-family:'Space Mono',monospace;
+    font-size:0.65rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--coral-dim);
+    font-weight:700;
+  }
+  .card-title{
+    font-size:0.92rem;
+    font-weight:700;
+    line-height:1.25;
+  }
+  .card-desc{
+    font-size:0.8rem;
+    color:#5c5768;
+    line-height:1.4;
+    flex:1;
+  }
+  .price-row{
+    display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;
+  }
+  .price-now{
+    font-family:'Archivo Black',sans-serif;
+    font-size:1.15rem;
+    color:var(--coral-dim);
+  }
+  .price-old{
+    font-size:0.8rem;
+    color:#a19cae;
+    text-decoration:line-through;
+  }
+  .cta-btn{
+    margin-top:4px;
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    background:var(--ink);
+    color:var(--cream);
+    padding:10px;
+    border-radius:10px;
+    font-weight:700;
+    font-size:0.85rem;
+    transition:background .2s ease;
+  }
+  .cta-btn:hover{background:var(--coral);}
+
+  .empty-state{
+    text-align:center;
+    padding:60px 20px;
+    color:var(--muted);
+    display:none;
+  }
+  .empty-state.show{display:block;}
+
+  /* ---------- footer ---------- */
+  footer{
+    margin-top:50px;
+    padding:36px 20px 44px;
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,0.08);
+  }
+  footer .tiktok-pill{margin:0 auto 18px;width:max-content;}
+  footer p{
+    font-size:0.75rem;
+    color:var(--muted);
+    max-width:480px;
+    margin:6px auto 0;
+    line-height:1.5;
+  }
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="logo">ACHAD<span>INHOS</span></div>
+    <a class="tiktok-pill" id="tiktokLinkTop" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path fill="currentColor" d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6c0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64c0 3.33 2.76 5.7 5.69 5.7c3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/></svg>
+      <span id="tiktokHandleTop">@seuusuario</span>
+    </a>
+  </header>
+
+  <section class="hero">
+    <span class="eyebrow">visto no tiktok</span>
+    <h1 class="display">achadinhos que <span class="accent">bombaram</span> no feed</h1>
+    <p>Os produtos que aparecem nos meus vídeos, direto pra sua Shopee. Toca, garante o seu.</p>
+  </section>
+
+  <div class="marquee-wrap">
+    <div class="marquee mono" id="marquee"></div>
+  </div>
+
+  <div class="filters-wrap">
+    <input class="search-input" id="searchInput" type="text" placeholder="Buscar produto...">
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <main>
+    <div class="grid" id="grid"></div>
+    <p class="empty-state" id="emptyState">Nenhum produto encontrado. Tenta outra busca ✨</p>
+  </main>
+
+  <footer>
+    <a class="tiktok-pill" id="tiktokLinkBottom" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path fill="currentColor" d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6c0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64c0 3.33 2.76 5.7 5.69 5.7c3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/></svg>
+      <span>Me segue no TikTok</span>
+    </a>
+    <p>Este site pode conter links de afiliado da Shopee. Se você comprar por eles, eu posso receber uma comissão — sem nenhum custo extra pra você.</p>
+    <p id="footerName">© 2026 Achadinhos</p>
+  </footer>
+
+<script>
+/* ======================================================================
+   CONFIGURAÇÃO DO SITE — edite aqui embaixo
+   ====================================================================== */
+
+const SITE = {
+  nome: "Achadinhos",                              // nome que aparece no rodapé
+  tiktokHandle: "@seuusuario",                      // seu @ do tiktok
+  tiktokUrl: "https://www.tiktok.com/@seuusuario",  // link completo do seu perfil
+};
+
+/* ======================================================================
+   PRODUTOS — adicione quantos quiser, copiando um bloco { ... } abaixo.
+   Campos:
+     categoria    -> usado nos filtros (crie quantas categorias quiser)
+     nome         -> título do produto
+     descricao    -> frase curta descrevendo o produto
+     imagem       -> URL da foto do produto (ideal formato vertical 9:13)
+     precoAtual   -> preço com desconto, número (ex: 39.90)
+     precoAntigo  -> preço original, número (opcional, deixe null se não tiver)
+     linkShopee   -> seu link de afiliado da Shopee para esse produto
+   ====================================================================== */
+
+const PRODUCTS = [
+  {
+    categoria: "Casa",
+    nome: "Luminária LED de Nuvem",
+    descricao: "Luz ambiente com efeito de trovão, controle por app.",
+    imagem: "https://placehold.co/450x650/2A2536/F6F1E9?text=Foto+do+produto",
+    precoAtual: 49.90,
+    precoAntigo: 89.90,
+    linkShopee: "https://shopee.com.br/",
+  },
+  {
+    categoria: "Beleza",
+    nome: "Espelho com Luz de Maquiagem",
+    descricao: "Espelho recarregável com 3 tons de luz ajustável.",
+    imagem: "https://placehold.co/450x650/2A2536/F6F1E9?text=Foto+do+produto",
+    precoAtual: 59.90,
+    precoAntigo: 119.90,
+    linkShopee: "https://shopee.com.br/",
+  },
+  {
+    categoria: "Tech",
+    nome: "Suporte de Celular Articulado",
+    descricao: "Gira 360°, ideal pra gravar vídeo ou assistir série.",
+    imagem: "https://placehold.co/450x650/2A2536/F6F1E9?text=Foto+do+produto",
+    precoAtual: 24.90,
+    precoAntigo: null,
+    linkShopee: "https://shopee.com.br/",
+  },
+  {
+    categoria: "Moda",
+    nome: "Bolsa Transversal Compacta",
+    descricao: "Modelo pequeno, cabe carteira, chave e celular.",
+    imagem: "https://placehold.co/450x650/2A2536/F6F1E9?text=Foto+do+produto",
+    precoAtual: 69.90,
+    precoAntigo: 99.90,
+    linkShopee: "https://shopee.com.br/",
+  },
+  {
+    categoria: "Casa",
+    nome: "Organizador de Gaveta 8 Nichos",
+    descricao: "Divide meias, roupas íntimas e acessórios facilmente.",
+    imagem: "https://placehold.co/450x650/2A2536/F6F1E9?text=Foto+do+produto",
+    precoAtual: 19.90,
+    precoAntigo: 34.90,
+    linkShopee: "https://shopee.com.br/",
+  },
+  {
+    categoria: "Tech",
+    nome: "Fone Bluetooth In-Ear",
+    descricao: "Bateria de 20h, resistente à água, cancelamento de ruído.",
+    imagem: "https://placehold.co/450x650/2A2536/F6F1E9?text=Foto+do+produto",
+    precoAtual: 79.90,
+    precoAntigo: 159.90,
+    linkShopee: "https://shopee.com.br/",
+  },
+];
+
+/* ======================================================================
+   A partir daqui é só o motor do site — não precisa mexer.
+   ====================================================================== */
+
+document.getElementById("footerName").textContent = "© 2026 " + SITE.nome;
+document.getElementById("tiktokHandleTop").textContent = SITE.tiktokHandle;
+document.getElementById("tiktokLinkTop").href = SITE.tiktokUrl;
+document.getElementById("tiktokLinkBottom").href = SITE.tiktokUrl;
+
+const marqueeText = ["visto no tiktok", "achadinhos", "testado e aprovado", "toca e garante o seu"];
+const marqueeEl = document.getElementById("marquee");
+for (let i = 0; i < 4; i++) {
+  marqueeText.forEach(t => {
+    const span = document.createElement("span");
+    span.textContent = "✦ " + t;
+    marqueeEl.appendChild(span);
+  });
+}
+
+const fmt = (n) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+const categorias = ["Todos", ...new Set(PRODUCTS.map(p => p.categoria))];
+let categoriaAtiva = "Todos";
+let termoBusca = "";
+
+const chipsEl = document.getElementById("chips");
+categorias.forEach(cat => {
+  const btn = document.createElement("button");
+  btn.className = "chip" + (cat === "Todos" ? " active" : "");
+  btn.textContent = cat;
+  btn.addEventListener("click", () => {
+    categoriaAtiva = cat;
+    [...chipsEl.children].forEach(c => c.classList.remove("active"));
+    btn.classList.add("active");
+    render();
+  });
+  chipsEl.appendChild(btn);
+});
+
+document.getElementById("searchInput").addEventListener("input", (e) => {
+  termoBusca = e.target.value.toLowerCase();
+  render();
+});
+
+function cardHtml(p) {
+  const desconto = p.precoAntigo ? Math.round(100 - (p.precoAtual / p.precoAntigo) * 100) : null;
+  return `
+    <a class="card" href="${p.linkShopee}" target="_blank" rel="noopener nofollow sponsored">
+      <div class="card-media">
+        <img src="${p.imagem}" alt="${p.nome}" loading="lazy">
+        ${desconto ? `<span class="badge-discount">-${desconto}%</span>` : ""}
+        <span class="play-dot"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+      </div>
+      <div class="card-body">
+        <span class="card-cat">${p.categoria}</span>
+        <span class="card-title">${p.nome}</span>
+        <span class="card-desc">${p.descricao}</span>
+        <div class="price-row">
+          <span class="price-now">${fmt(p.precoAtual)}</span>
+          ${p.precoAntigo ? `<span class="price-old">${fmt(p.precoAntigo)}</span>` : ""}
+        </div>
+        <span class="cta-btn">Ver na Shopee →</span>
+      </div>
+    </a>
+  `;
+}
+
+function render() {
+  const grid = document.getElementById("grid");
+  const empty = document.getElementById("emptyState");
+  const filtrados = PRODUCTS.filter(p => {
+    const matchCat = categoriaAtiva === "Todos" || p.categoria === categoriaAtiva;
+    const matchBusca = p.nome.toLowerCase().includes(termoBusca) || p.descricao.toLowerCase().includes(termoBusca);
+    return matchCat && matchBusca;
+  });
+  grid.innerHTML = filtrados.map(cardHtml).join("");
+  empty.classList.toggle("show", filtrados.length === 0);
+}
+
+render();
+</script>
+</body>
+</html>
